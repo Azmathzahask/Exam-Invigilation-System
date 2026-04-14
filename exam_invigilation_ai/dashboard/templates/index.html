@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Exam Invigilation Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}?v=3.0">
+</head>
+<body>
+    <header>
+        <h1>AI-Powered Dual-Camera Invigilation</h1>
+        <div style="display: flex; align-items: center; gap: 1rem;">
+            <div id="session-info">Live Monitoring - Session ID: TMP_SESSION</div>
+            <button id="theme-toggle" class="theme-toggle-btn">
+                <span id="theme-icon">🌙</span> Dark Mode
+            </button>
+        </div>
+    </header>
+
+    <main>
+        <div class="video-container">
+            <div class="video-item">
+                <h3>Front Camera Feed</h3>
+                <img src="{{ url_for('video_feed', camera_type='front') }}" width="100%">
+            </div>
+            <div class="video-item">
+                <h3>Back Camera Feed</h3>
+                <img src="{{ url_for('video_feed', camera_type='back') }}" width="100%">
+            </div>
+        </div>
+
+        <div class="dashboard-controls">
+            <div class="score-panel">
+                <h3>Student Suspicion Scores</h3>
+                <div id="score-list"></div>
+            </div>
+            <div class="event-panel">
+                <h3>Recent Suspicious Events</h3>
+                <div id="event-log"></div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Theme Toggle Logic
+        const themeToggleBtn = document.getElementById('theme-toggle');
+        const themeIcon = document.getElementById('theme-icon');
+        const currentTheme = localStorage.getItem('theme') || 'light';
+
+        // Apply saved theme early to prevent flickering
+        if (currentTheme === 'dark') {
+            document.documentElement.setAttribute('data-theme', 'dark');
+            themeToggleBtn.innerHTML = '<span id="theme-icon">☀️</span> Light Mode';
+        }
+
+        themeToggleBtn.addEventListener('click', () => {
+            let theme = document.documentElement.getAttribute('data-theme');
+            if (theme === 'dark') {
+                document.documentElement.setAttribute('data-theme', 'light');
+                localStorage.setItem('theme', 'light');
+                themeToggleBtn.innerHTML = '<span id="theme-icon">🌙</span> Dark Mode';
+            } else {
+                document.documentElement.setAttribute('data-theme', 'dark');
+                localStorage.setItem('theme', 'dark');
+                themeToggleBtn.innerHTML = '<span id="theme-icon">☀️</span> Light Mode';
+            }
+        });
+
+        async function updateStats() {
+            try {
+                const response = await fetch('/api/status');
+                const data = await response.json();
+                
+                // Update scores
+                const scoreList = document.getElementById('score-list');
+                scoreList.innerHTML = '';
+                for (const [id, score] of Object.entries(data.scores)) {
+                    const color = score >= 100 ? '#ff4d4d' : (score >= 50 ? '#ffae42' : '#4caf50');
+                    scoreList.innerHTML += `
+                        <div class="score-card">
+                            <span>Student ID: ${id}</span>
+                            <div class="score-bar-bg">
+                                <div class="score-bar" style="width: ${Math.min(score, 100)}%; background-color: ${color}"></div>
+                            </div>
+                            <span>${Math.round(score)} pts</span>
+                        </div>
+                    `;
+                }
+
+                // Update events
+                const eventLog = document.getElementById('event-log');
+                eventLog.innerHTML = data.events.map(e => `
+                    <div class="event-item">
+                        <span class="event-time">${new Date(e.timestamp * 1000).toLocaleTimeString()}</span>
+                        <span class="event-desc">Student ${e.id}: <strong>${e.type}</strong> - ${e.description}</span>
+                    </div>
+                `).reverse().join('');
+            } catch (e) {
+                console.error("Failed to fetch status", e);
+            }
+        }
+
+        setInterval(updateStats, 500);
+    </script>
+</body>
+</html>

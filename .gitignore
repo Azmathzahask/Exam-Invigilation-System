@@ -1,0 +1,40 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.egg
+*.egg-info/
+dist/
+build/
+.eggs/
+
+# Virtual environments
+venv/
+env/
+.venv/
+
+# Logs
+logs/
+*.log
+
+# Video data (large files)
+exam_invigilation_ai/data/videos/
+
+# Output clips
+exam_invigilation_ai/data/output_clips/
+
+# Model weights (downloaded automatically)
+# exam_invigilation_ai/yolov8n.pt  # Keep this since it's already there
+
+# IDE
+.vscode/
+.idea/
+*.swp
+
+# pytest cache
+.pytest_cache/
+
+# OS
+.DS_Store
+Thumbs.db

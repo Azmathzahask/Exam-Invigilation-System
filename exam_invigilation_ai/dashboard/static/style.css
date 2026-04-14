@@ -1,0 +1,165 @@
+:root {
+    /* Light Theme (Default) */
+    --bg-main: #f8f9fa;
+    --bg-panel: #ffffff;
+    --text-main: #212529;
+    --text-muted: #6c757d;
+    --border-color: #e9ecef;
+    --border-subtle: #f1f3f5;
+    --shadow-soft: 0 4px 12px rgba(0,0,0,0.08);
+    --shadow-hover: 0 6px 16px rgba(0,0,0,0.12);
+    --header-shadow: 0 2px 4px rgba(0,0,0,0.05);
+
+    /* Accents */
+    --accent-primary: #4361ee;
+    --accent-secondary: #4cc9f0;
+    --accent-alert: #f72585;
+}
+
+[data-theme="dark"] {
+    /* Dark Theme */
+    --bg-main: #121212;
+    --bg-panel: #1f1f1f;
+    --text-main: #e0e0e0;
+    --text-muted: #888888;
+    --border-color: #333333;
+    --border-subtle: #2c2c2c;
+    --shadow-soft: 0 4px 6px rgba(0,0,0,0.3);
+    --shadow-hover: 0 6px 16px rgba(0,0,0,0.5);
+    --header-shadow: 0 2px 4px rgba(0,0,0,0.3);
+
+    /* Accents */
+    --accent-primary: #bb86fc;
+    --accent-secondary: #03dac6;
+    --accent-alert: #cf6679;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: var(--bg-main);
+    color: var(--text-main);
+    margin: 0;
+    padding: 0;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+header {
+    background-color: var(--bg-panel);
+    padding: 1rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid var(--border-color);
+    box-shadow: var(--header-shadow);
+    transition: background-color 0.3s, border-color 0.3s;
+}
+
+h1 { margin: 0; font-size: 1.5rem; color: var(--accent-primary); transition: color 0.3s; }
+
+main {
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.video-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+}
+
+.video-item {
+    background-color: var(--bg-panel);
+    padding: 1rem;
+    border-radius: 12px;
+    box-shadow: var(--shadow-soft);
+    transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.3s;
+}
+
+.video-item:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-hover);
+}
+
+.video-item h3 { margin-top: 0; font-size: 1rem; color: var(--accent-secondary); transition: color 0.3s; }
+
+.dashboard-controls {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+}
+
+.score-panel, .event-panel {
+    background-color: var(--bg-panel);
+    padding: 1.5rem;
+    border-radius: 12px;
+    height: 300px;
+    overflow-y: auto;
+    box-shadow: var(--shadow-soft);
+    transition: background-color 0.3s;
+}
+
+h3 { margin-top: 0; border-bottom: 1px solid var(--border-color); padding-bottom: 0.5rem; transition: border-color 0.3s; }
+
+.score-card {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.score-bar-bg {
+    flex-grow: 1;
+    background-color: var(--border-color);
+    height: 10px;
+    border-radius: 5px;
+    overflow: hidden;
+    transition: background-color 0.3s;
+}
+
+.score-bar {
+    height: 100%;
+    border-radius: 5px;
+    transition: width 0.3s ease;
+}
+
+.event-item {
+    padding: 0.75rem 0.5rem;
+    border-bottom: 1px solid var(--border-subtle);
+    font-size: 0.9rem;
+    transition: border-color 0.3s;
+}
+
+.event-item:last-child {
+    border-bottom: none;
+}
+
+.event-time { color: var(--text-muted); font-family: monospace; margin-right: 1rem; transition: color 0.3s; }
+.event-desc strong { color: var(--accent-alert); transition: color 0.3s; }
+
+/* Theme Toggle Button Styles */
+.theme-toggle-btn {
+    background: var(--bg-panel);
+    color: var(--text-main);
+    border: 1px solid var(--border-color);
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-weight: 600;
+    transition: background-color 0.3s, color 0.3s, border-color 0.3s, transform 0.1s;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.theme-toggle-btn:hover {
+    background: var(--border-color);
+    transform: translateY(-1px);
+}
+
+.theme-toggle-btn:active {
+    transform: translateY(0);
+}

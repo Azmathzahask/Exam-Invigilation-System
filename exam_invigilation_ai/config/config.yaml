@@ -1,0 +1,47 @@
+video:
+  front_path: "C:/Users/azmat/f_new.mp4"
+  back_path: "C:/Users/azmat/b_new.mp4"
+  frame_width: 640
+  frame_height: 480
+  fps: 30
+  sync_tolerance: 0.03
+
+detection:
+  model_path: "yolov8n.pt"  # Will be downloaded automatically by ultralytics
+  confidence_threshold: 0.25
+  object_threshold: 0.3
+  target_classes: [0, 67, 73, 74]  # person, cell phone, book, clock
+  frame_skip: 1
+
+tracking:
+  algorithm: "bytetrack"
+  iou_threshold: 0.5
+
+pose:
+  min_detection_confidence: 0.5
+  min_tracking_confidence: 0.5
+
+behavior:
+  side_look_threshold: 30  # degrees
+  side_look_count: 5
+  time_window: 30  # seconds
+  leaning_pixel_threshold: 50
+
+scoring:
+  suspicion_threshold: 50
+  alert_threshold: 100
+  weights:
+    side_look: 15
+    leaning: 10
+    phone: 100
+    smartwatch: 80
+    chit: 90
+    talking: 40
+    look_back: 15
+    abnormal_movement: 10
+  decay_rate: 2.0  # points per second
+
+dashboard:
+  port: 5000
+  host: "0.0.0.0"
+  refresh_rate: 0.5  # seconds
