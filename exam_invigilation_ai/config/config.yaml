@@ -28,8 +28,8 @@ behavior:
   leaning_pixel_threshold: 50
 
 scoring:
-  suspicion_threshold: 50
-  alert_threshold: 100
+  suspicion_threshold: 150
+  alert_threshold: 200
   weights:
     side_look: 15
     leaning: 10
